@@ -1,3 +1,20 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  resources :clients, only: [:index] do
+    resources :policies, only: [:index]
+    collection do
+      get 'count_all'
+    end
+  end
+
+  resources :policies, only: [:index] do
+    collection do
+      get 'count_all'
+    end
+  end
+
+  resources :carriers, only: [:index] do
+    collection do
+      get 'count_all'
+    end
+  end
 end
