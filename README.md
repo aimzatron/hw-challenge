@@ -1,12 +1,20 @@
-##My Implementation:##
+## My Implementation: ##
+
 Initially, I looked through the CSV's to see what data needed to be imported and what tables could be shared.
 I came up with the following structure:
+
 `carriers` which has_many `policies` and has_one `address`
+
 `clients` which `belongs_to` `client_divisions` and has_many `policies` and has_one `address`
+
 `policies` which `belongs_to` `clients` and `carriers` and `policy_types` and `policy_divisions`
+
 `addresses`
+
 `policy_divisions` which has_many `policies`
+
 `client_divisions` which has many `clients`
+
 `policy_types` which has_many `policies`
 
 I wanted to make a shared address table to be able to have all of the address data in one place. I considered doing this for `divisions` or making it a polymorphic table but ultimately went with a simpler structure. If I had more time, I would likely go back and make divisions a polymorphic table called `divisionable` that would be shared between `policies` and `clients`.
@@ -21,22 +29,32 @@ I decided to put all of the importers into a rake task for ease of use because i
 
 For the API endpoints, I added the gem `active_model_serilizers` to serialize the models for simple json rendering and `will_paginate` to add pagination to the nested client policies endpoint. I also added corresponding specs.
 
-##To run locally##
+## To run locally: ##
+
 `git clone` the repo
+
 run `bundle install`
+
 run `bundle exec rake db:setup`
+
 run `bundle exec rails s`
 
-##Available endpoints##
+## Available endpoints: ##
+
 `/clients/count_all` returns the count for all of the clients
+
 `/carriers/count_all` returns the count for all of the carriers
+
 `/policies/count_all` returns the count for all of the policies
+
 `/clients/*id*/policies` returns paginated index of all policies for clients
 
-##To run the importer:##
+## To run the importer: ##
+
 Copy the CSV's to the 'lib/tasks' dir
+
 run `bundle exec rake import import_carriers_clients_policies:import_all`
 
-##To run specs:##
+## To run specs: ##
 run `bundle exec rspec spec`
 
